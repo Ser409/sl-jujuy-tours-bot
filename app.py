@@ -8,11 +8,9 @@ app = Flask(__name__)
 load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-
 @app.route("/", methods=["GET"])
 def home():
     return "SL JUJUY TOURS BOT ACTIVO EN HEROKU."
-
 
 @app.route("/webhook", methods=["GET"])
 def webhook_verify():
@@ -28,7 +26,6 @@ def webhook_verify():
             return "Token inválido", 403
     return "Método no permitido", 405
 
-
 @app.route("/webhook", methods=["POST"])
 def webhook():
     try:
@@ -38,7 +35,6 @@ def webhook():
     except Exception as e:
         print("[ERROR]", e)
         return jsonify({"error": str(e)}), 500
-
 
 @app.route("/openai-clima", methods=["POST"])
 def openai_clima():
@@ -53,10 +49,7 @@ def openai_clima():
         respuesta = openai.ChatCompletion.create(
             model="gpt-3.5-turbo",
             messages=[
-                {
-                    "role": "user",
-                    "content": prompt
-                }
+                {"role": "user", "content": prompt}
             ]
         )
 
