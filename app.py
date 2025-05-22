@@ -1,3 +1,21 @@
+@app.route('/', methods=['GET'])
+def home():
+    return "SL JUJUY TOURS BOT ACTIVO EN HEROKU."
+
+@app.route('/webhook', methods=['GET'])
+def webhook_verify():
+    verify_token = "SL_JUJUY_TOUR_VERIF"
+    mode = request.args.get('hub.mode')
+    token = request.args.get('hub.verify_token')
+    challenge = request.args.get('hub.challenge')
+
+    if mode and token:
+        if mode == 'subscribe' and token == verify_token:
+            return challenge, 200
+        else:
+            return 'Token inválido', 403
+    return 'Método no permitido', 405
+
 from flask import Flask, request, jsonify
 import openai
 import os
